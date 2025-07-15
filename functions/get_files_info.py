@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-# from aiagent.config import CHAR_READ_LIMIT
+from agent_config import CHAR_READ_LIMIT
 
 def get_files_info(working_directory, directory=None):
     abs_working_dir = os.path.abspath(working_directory)
@@ -36,7 +36,7 @@ def get_file_content(working_directory, file_path):
     abs_file_path = os.path.abspath(os.path.join(working_directory, file_path))
     try:
         with open(abs_file_path, 'r', encoding='utf-8') as f:
-            content = f.read(10000)
+            content = f.read(CHAR_READ_LIMIT)
             if f.read(1):  # Check if there is more content after 10000 chars
                 content += f'\n[...File "{file_path}" truncated at 10000 characters]'
             return content
