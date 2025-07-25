@@ -42,6 +42,10 @@ def generate_content(client, messages, verbose):
             tools=[available_functions],
             system_instruction=SYSTEM_PROMPT)
     )
+    responses_list = response.candidates
+    for r in responses_list:
+        messages.append(r.content)
+
     if verbose:
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
         print("Response tokens:", response.usage_metadata.candidates_token_count)

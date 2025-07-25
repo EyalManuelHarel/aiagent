@@ -7,6 +7,11 @@ from functions.write_file_content import write_file, schema_write_file
 
 WORKING_DIRECTORY = "./calculator"
 
+# TESTS
+di = {'directory': 'calculator', 'working_directory': './calculator'}
+print(f"DEBUG: {get_files_info(**di)}")
+# END TESTS
+
 available_functions = types.Tool(
     function_declarations=[
         schema_get_files_info,
@@ -20,6 +25,8 @@ available_functions = types.Tool(
 def call_function(function_call_part, verbose=False):
     function_name = function_call_part.name
     function_args = dict(function_call_part.args)
+    function_args["working_directory"] = WORKING_DIRECTORY
+
     if verbose:
         print(f" - Calling function: {function_name}({function_args})")
     else:
@@ -42,7 +49,6 @@ def call_function(function_call_part, verbose=False):
             ],
         )
     
-    function_args["working_directory"] = WORKING_DIRECTORY
     function_result = function_map[function_name](**function_args)
     return types.Content(
         role="tool",
